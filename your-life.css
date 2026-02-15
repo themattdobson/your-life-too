@@ -109,6 +109,27 @@ input:required:invalid.touched {
 .credits a:visited {
   color: #aaaaaa;
 }
+.data-actions {
+  margin-top: 0.5rem;
+}
+.data-btn {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  color: #888;
+  cursor: pointer;
+  margin: 0 0.2rem;
+}
+.data-btn:hover {
+  border-color: #999;
+  color: #555;
+}
+.data-btn.active {
+  border-color: #4f6c96;
+  color: #4f6c96;
+}
 
 
 
@@ -158,10 +179,11 @@ input:required:invalid.touched {
   max-width: 624px; /* 12px per week * 52weeks = 624px */
 }
 .weeks > li {
-  border: 1px solid black;
+  border: 1px solid #ccc;
+  border-radius: 50%;
   width: 1.282051282%; /* 8px/624px */
-  padding-bottom: .961538462%; /* 6px/624px */
-  margin: .320512821%; /* 2px/624px */
+  padding-bottom: .961538462%; /* 6px/624px — accounts for 2px of border to match 8px total width */
+  margin: .160256410%; /* 1px/624px */
   float: left;
 }
 .weeks--x-label {
@@ -239,6 +261,22 @@ input:required:invalid.touched {
   font-weight: bold;
 }
 
+/* Tooltip */
+.week-tooltip {
+  position: absolute;
+  background: #333;
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 999;
+}
+.week-tooltip[hidden] {
+  display: none;
+}
+
 /**
  * Utilities
  */
@@ -256,6 +294,213 @@ input:required:invalid.touched {
   clip: rect(0 0 0 0);
   height: 1px; width: 1px;
   margin: -1px; padding: 0; border: 0;
+}
+
+/**
+ * Week Notes
+ */
+.weeks > li {
+  cursor: pointer;
+}
+.weeks > li.has-note {
+  background-color: #4f6c96 !important;
+  border-color: transparent !important;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay[hidden] {
+  display: none;
+}
+.modal-panel {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 520px;
+  max-height: 80vh;
+  padding: 1.25rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.modal-title {
+  font-size: 1rem;
+  margin: 0;
+  color: #000080;
+}
+.modal-dates {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0.15rem 0 0;
+}
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  color: #666;
+  line-height: 1;
+}
+.modal-textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  line-height: 1.4;
+}
+.modal-textarea:focus {
+  outline: none;
+  border-color: #000080;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.modal-btn {
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.modal-btn-save {
+  background: #000080;
+  color: #fff;
+}
+.modal-btn-delete {
+  background: none;
+  color: #cc0000;
+  border: 1px solid #cc0000;
+}
+
+/* Note title */
+.modal-note-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000080;
+}
+.modal-title-input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.modal-title-input:focus {
+  outline: none;
+  border-color: #000080;
+}
+
+/* Rendered markdown view */
+.modal-rendered {
+  line-height: 1.5;
+  font-size: 0.95rem;
+  overflow-y: auto;
+  max-height: 50vh;
+  padding: 0.5rem 0;
+}
+.modal-rendered h1,
+.modal-rendered h2,
+.modal-rendered h3 {
+  margin: 0.5em 0 0.25em;
+  color: #000080;
+}
+.modal-rendered h1:first-child,
+.modal-rendered h2:first-child,
+.modal-rendered h3:first-child {
+  margin-top: 0;
+}
+.modal-rendered p {
+  margin: 0.4em 0;
+}
+.modal-rendered ul,
+.modal-rendered ol {
+  margin: 0.4em 0;
+  padding-left: 1.5em;
+}
+.modal-rendered code {
+  background: #f0f0f0;
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+.modal-rendered pre {
+  background: #f0f0f0;
+  padding: 0.75rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+.modal-rendered pre code {
+  background: none;
+  padding: 0;
+}
+.modal-rendered blockquote {
+  border-left: 3px solid #000080;
+  margin: 0.4em 0;
+  padding-left: 0.75em;
+  color: #555;
+}
+
+/* EasyMDE overrides inside modal */
+.modal-panel .EasyMDEContainer {
+  width: 100%;
+}
+.modal-panel .EasyMDEContainer .CodeMirror {
+  min-height: 120px;
+  max-height: 40vh;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+.modal-panel .editor-toolbar {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+/* Mobile: bottom sheet */
+@media (max-width: 624px) {
+  .modal-overlay {
+    align-items: flex-end;
+  }
+  .modal-panel {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 12px 12px 0 0;
+    max-height: 75vh;
+    /* Dynamically set by JS via --visual-vh when keyboard is open */
+    max-height: calc(var(--visual-vh, 75vh) - 2rem);
+    overflow-y: auto;
+    transition: max-height 0.15s ease;
+  }
+  .modal-panel .EasyMDEContainer .CodeMirror {
+    max-height: 30vh;
+  }
+  .modal-panel .editor-toolbar {
+    flex-wrap: wrap;
+  }
 }
 
 /**

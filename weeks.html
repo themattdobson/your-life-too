@@ -6,6 +6,7 @@
   <meta name="description" content="Enter your date of birth, to see your life in weeks. Based on the post by Tim Urban, from Wait by Why.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="weeks-favicon.png" sizes="32x32">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
   <link rel="stylesheet" href="your-life.css">
   <style>
     body {
@@ -4770,7 +4771,45 @@
     <p>Based on the <a href="http://waitbutwhy.com/2014/05/life-weeks.html">Your Life in Weeks</a> post by Tim Urban, from <a href="http://waitbutwhy.com/">Wait But Why</a>.</p>
     <p class="print-hide"><a href="https://github.com/bryanbraun/your-life">See the code on Github.</a></p>
     <p class="print-hide"><a href="javascript:window.print()">Print this page.</a></p>
+    <p class="print-hide data-actions">
+      <button id="export-btn" class="data-btn">Export Notes</button>
+      <button id="import-btn" class="data-btn">Import Notes</button>
+      <button id="auto-backup-btn" class="data-btn" hidden>Auto-Backup</button>
+      <input type="file" id="import-file" accept=".json" hidden>
+    </p>
   </div>
+  <!-- Week Notes Modal -->
+  <div id="week-modal-overlay" class="modal-overlay" hidden>
+    <div id="week-modal" class="modal-panel">
+      <div class="modal-header">
+        <div>
+          <h2 id="modal-week-label" class="modal-title"></h2>
+          <p id="modal-week-dates" class="modal-dates"></p>
+        </div>
+        <button id="modal-close" class="modal-close-btn" aria-label="Close">&times;</button>
+      </div>
+      <!-- Read view: rendered markdown -->
+      <div id="modal-read" hidden>
+        <h3 id="modal-read-title" class="modal-note-title" hidden></h3>
+        <div id="modal-rendered" class="modal-rendered"></div>
+        <div class="modal-actions">
+          <button id="modal-delete" class="modal-btn modal-btn-delete" hidden>Delete</button>
+          <button id="modal-edit-btn" class="modal-btn modal-btn-save">Edit</button>
+        </div>
+      </div>
+      <!-- Edit view: EasyMDE editor -->
+      <div id="modal-edit" hidden>
+        <input id="modal-note-title" class="modal-title-input" type="text" placeholder="Title (optional)">
+        <textarea id="modal-note" class="modal-textarea" placeholder="What happened this week?"></textarea>
+        <div class="modal-actions">
+          <button id="modal-cancel" class="modal-btn modal-btn-delete">Cancel</button>
+          <button id="modal-save" class="modal-btn modal-btn-save">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
   <script src="your-life.js"></script>
 </body>
 </html>
