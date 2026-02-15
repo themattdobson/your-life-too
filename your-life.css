@@ -183,7 +183,7 @@ input:required:invalid.touched {
   border-radius: 50%;
   width: 1.282051282%; /* 8px/624px */
   padding-bottom: .961538462%; /* 6px/624px — accounts for 2px of border to match 8px total width */
-  margin: .160256410%; /* 1px/624px */
+  margin: .320512821%; /* 2px/624px */
   float: left;
 }
 .weeks--x-label {
